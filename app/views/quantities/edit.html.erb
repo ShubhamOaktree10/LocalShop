@@ -1,0 +1,10 @@
+<h2>Seller Name : <%= current_user.FirstName%> <%= current_user.LastName%></h2>
+<h3>Shop Name : <%= @shop.name%></h3>
+<h4>Category Name : <%= @category.name%></h4>
+<h4>Product Name : <%= @product.name%></h4>
+<h4>Product Detail : <%= @product.detail%></h4>
+<% if @product.avatar.attached? %>
+  <img src="<%=(url_for(@product.avatar))%>" style="width:250px;height:250px;">
+<%end%>
+<h1> Add New Quantity</h1>
+<%= render "form", quantity:@quantity %>

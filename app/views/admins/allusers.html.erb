@@ -1,0 +1,62 @@
+<h1>All Users</h1>
+<h3><%= link_to "Back", admins_path%></h3>
+
+<div id="allusershow">
+<table style="border-style: dotted;"><tr><th>User_Id</th><th>UserName</th><th>Role</th><th>Status</th><th>Detail</th></tr>
+
+<% @roles.each do |role| %>
+  <% if (role.name != "admin") %>
+  <% user = User.find(role.user_id) %>
+    <tr><th><%= user.id %></th><th><%= user.FirstName %> <%=user.LastName%></th><td><%= role.name %></td>
+      <th>
+        <% if user.status == true %>
+          Active User
+        <% else %>
+          Block User
+        <% end %>
+        
+      </th>
+      <td><%= link_to "View", allusers_path(:q => role.user_id) %></td></tr>
+  <%end%>
+<%end%>
+
+</table>
+</div>
+
+<div id="showuser">
+  
+  <% if (params[:q] != nil )%>
+    <% if @user = User.find(params[:q]) %>
+      <h2><%= @user.FirstName%>  Details </h2>
+      <h4>
+      <ul>
+      <li>Name : <%=@user.FirstName%>  <%=@user.LastName%></li>   
+      <li> Email: <%=@user.email %></li>
+      <li> Address: <%=@user.address %></li>
+      <li> City: <%=@user.city %></li>
+      <li> State: <%=@user.state %></li>
+      <li> Country: <%=@user.country %></li>
+      <li> Pincode: <%=@user.pincode %></li>
+      <% if @user.status == true %>
+        <li>Active</li>
+      <% else %>
+        <li>Block</li>
+      <% end %>
+      <%= link_to "Edit", edit_admin_path(@user) %>
+      </ul>
+      </h4>
+    <%end%>
+  <%end%>
+</div>
+
+<style type="text/css">
+  #allusershow{
+    float: left;
+    width: 350px;
+  }
+  #showuser
+  {
+    float: left;
+    padding-left: 100px;
+  }
+</style>

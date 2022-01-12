@@ -1,0 +1,61 @@
+<h2>Buy History</h2>
+<h2 id="h2h"><%= link_to "Show Favorite", favorites_path %></h2>
+<h2 id="h2h"><%= link_to "Show Carts", carts_path %></h2>
+<h3>
+  <%= link_to "Home", reusers_path %>
+</h3>
+<% pp = 0 %>
+
+<div id="buyproduct">
+  <table>
+    <% @buys.each do |buy| %>
+      <% if product = Product.find(buy.product_id) %>
+        <tr><th><%=product.name%></th>
+        <td><%=product.detail%></td>
+        <th><%=product.price%></th>
+        <% if product.avatar.attached? %>
+          <td><img src="<%=(url_for(product.avatar))%>" style="width:250px;height:250px;"></td>
+        <%end%>
+        <th><%=buy.quant%></th>
+        <th><%=buy.created_at%></th>
+        <% pp = pp+(buy.quant*product.price)%>
+        </tr>
+      <%end%>
+    <%end%>
+  </table>
+</div>
+
+<div id="amount">
+  All Product Price : <%= pp %>
+</div>
+
+<style type="text/css">
+
+  #buyproduct{
+    float: left;
+  }
+
+  #amount{
+   float: right;
+   font-size: x-large;
+   padding-top: 30px;
+  }
+  
+  #sellerwork{
+    list-style-type: none;
+    font-size: x-large;
+    padding-top: 30px;
+  }
+
+  #a{
+    float: right;
+    padding-left: 20px;
+
+  }
+
+  #h2h{
+    float: right;
+    padding-top: none;
+    padding-right: 15px;
+  }
+</style>

@@ -1,0 +1,57 @@
+<h1>All Products</h1>
+<div id="clearfilter">
+  <% if params["q"].present? %>
+    <%= button_to "Clear Filter", {:controller => :users, :action => 'index'}, :method => :get %>
+  <% end %>
+</div>
+<%= form_tag("/", method: "get", remote:true) do %>
+  <%= label_tag(:q, "Search Product:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Search" ) %>
+<% end %>
+<div id="allproducts">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Detail</th>
+      <th>Price</th>
+      <th>Picture</th>
+    </tr>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.detail %></td>
+        <td><%= product.price %></td>
+        <% if product.avatar.attached? %>
+          <td><img src="<%= (url_for(product.avatar)) %>" style="width:250px;height:250px;"></td>
+        <%end%>
+        <td>
+          <% if totalratings = Rating.where("product_id = ?", product.id) %>
+            <% Float all = 0.0 %>
+            <%  c = 0 %>
+            
+            <% totalratings.each do |allrt| %>
+              <% all= all+allrt.point %>
+              <% c += 1 %>
+            <% end %>
+            <% Float alt = all/c %>
+            
+            <% if alt >0 %>
+              Average Rating is <%= alt %> Given By <%= c %> Users
+            <% end %> 
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+    <%= will_paginate @products %>
+</div>
+
+
+
+<style type="text/css">
+  #clearfilter{
+    float: right;
+  }
+</style>

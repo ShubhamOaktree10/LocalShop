@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project1</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
+    <%= csrf_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <% if current_user %>
+        
+        <ul id="abc">
+        <li>
+        <% if @current_role = Role.find_by_user_id(current_user.id) %>
+          <% if (@current_role.name == "admin") %>
+              <%= link_to current_user.FirstName, current_user %>
+          
+          <% elsif (@current_role.name == "seller") %>
+              <%= link_to current_user.FirstName, current_user %>
+          
+          <% else %>
+              <%= link_to current_user.FirstName, current_user %> 
+          <% end %>
+        
+        <% end %>
+        </li>
+        <li><%= link_to "Log out", logout_path, method: "delete" %></li>
+        </ul>
+    <% else %>
+        <ul id="abc">
+        <li><%= link_to "Login", 'login' %></a></li>
+        <li><%= link_to "New Account", 'signup' %></a></li>
+        </ul>
+    <% end %>
+  </head>
+
+  <body>
+    <% if alert %>
+    <h2 style="background-color: red;"><%= alert %></h2>
+    <%end%>
+    <%= yield %>
+  </body>
+</html>
+<style type="text/css">
+  #abc{
+    font-size: x-large;
+    list-style-type: none;
+    padding-top: none;
+    float: right;
+  }
+</style>

@@ -1,0 +1,19 @@
+<h1>Here Detail</h1>
+<div><table>
+	<tr><th>ShopName</th>
+    <td><%=@shop.name%></td></tr>
+  <tr><th>City</th>
+    <td><%=@shop.city%></td></tr>
+  <tr><th>State</th>
+    <td><%=@shop.state%></td></tr>
+  <tr><th>Country</th>
+    <td><%=@shop.country%></td></tr>
+  <tr><th>Pincode</th>
+    <td><%=@shop.pincode%></td></tr>
+  <tr><th><%= link_to "Edit", [:edit, current_user, @shop]%></th></tr>
+</table></div>
+<div>
+  <h3><%= link_to "Show Category", user_shop_categories_path(current_user, @shop)%></h3>
+  
+</div>
+<h2><%= link_to "Back",user_shops_path(current_user) %></h2>

@@ -1,0 +1,4 @@
+<h1>Admin Edit Page</h1>
+<% if @admin = User.find(params[:id])%>
+  <%= render "form", admin: @admin%>
+<%end%>

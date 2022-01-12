@@ -1,0 +1,23 @@
+<%= form_with model: [current_user, @shop, @category, @product]  do |form| %>
+  <br><br>
+  <div>
+    <%= form.label :Name %><br>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :Detail %><br>
+    <%= form.text_area :detail %>
+  </div>
+  <div>
+    <%= form.label :Price %><br>
+    <%= form.number_field :price, in: 1.0..10000000 %>
+  </div>
+  <div>
+    <%= form.label :Image %><br>
+    <%= form.file_field :avatar %>
+  </div>
+  <br>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

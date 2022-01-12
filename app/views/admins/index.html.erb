@@ -1,0 +1,75 @@
+<h1> Welcome Admin index </h1>
+<ul id="ad">
+  <li><%= link_to "Show All Users", allusers_path %></li>
+  <li><%= link_to "Show All Shops", allshops_path %></li>
+  <li><%= link_to "Show All Category", allcategories_path %></li>
+  <li><%= link_to "Show Cart", carts_path %></li>
+  <li><%= link_to "Show Favorite", favorites_path %></li>
+  <li id="a"><%= link_to "Buy History", buys_path %></li>
+</ul>
+<h1> All Products </h1>
+<%= form_tag(admins_path, method: "get", remote:true) do %>
+  <%= label_tag(:q, "Search Product:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Search" ) %>
+<% end %>
+<div id="allproducts">
+  <table>
+    
+    <% @products.each do |product| %>
+    <% count = 0 %>
+    <tr><th><%= product.name %></th>
+    <td><%= product.detail %></td>
+    <th><%= product.price %></th>
+    <% if product.avatar.attached? %>
+      <th><img src="<%= (url_for(product.avatar)) %>" style="width:250px;height:250px;" ></th>
+    <% end %>
+    <th> <%= link_to "View", showproduct_path(product.id) %></th><th></th><th></th>
+    
+
+
+
+    <th><% @favorites.each do |fav| %>
+      <% if product.id == fav.product_id %>
+        <%= button_to "remove from Favorite", {:controller => :favorites, :action => 'destroy', :id => fav.id }, :method => :delete, data: { confirm: "Remove from Favorite"}, remote:true, class: 'delete_favorite' %>
+        <% count +=1 %>
+        <% break %>
+      <% end %>
+    <% end %>
+    <% if count == 0 %>
+      <%= button_to "Add Favorite", {:controller => :favorites, :action => 'create', :product_id => product.id }, :method => :post, data: { confirm: "Add To Favorite"}, remote:true, class: 'add_favorite' %>
+    <% end %></th>
+
+     <th><% if totalratings = Rating.where("product_id = ?", product.id) %>
+            <% Float all = 0.0 %>
+            <%  c = 0 %>
+            <% totalratings.each do |allrt| %>
+              <% all= all+allrt.point %>
+              <% c += 1 %>
+            <% end %>
+            <% Float alt = all/c %>
+          <% if alt >0 %>
+            Average Rating is <%= alt %> Given By <%= c %> Users
+          <% end %> 
+    <% end %></th>
+
+    </tr>
+  <% end %>
+  <tr><th><%= will_paginate @products %></th></tr>
+  </table>
+</div>
+
+<style type="text/css">
+  #ad{
+    font-size: x-large;
+    list-style-type: none;
+    float: right;
+    padding-top: 0px;
+    background-color: skyblue;
+  }
+  #clearfilter{
+    float: right;
+    padding-top: 30px;
+    padding-right: 20px;
+  }
+</style>

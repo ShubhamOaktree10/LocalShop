@@ -1,0 +1,69 @@
+<%= form_with model: admin do |form| %>
+  
+  <%if @role = Role.find_by_user_id(admin.id)%>
+    
+    <% if @role.name == nil %>
+      <%= form.label :Role %>
+      <%= form.select :name, [["Buyer", "buyer"], ["Seller", "seller"]] %>    
+    <%else%>
+      <div>Role : <%=@role.name%></div>
+    <%end%>
+  <%end%>
+<br><br>
+  <div>
+    <%= form.label :FirstName %><br>
+    <%= form.text_field :FirstName %>
+  </div>
+
+  <div>
+    <%= form.label :LastName %><br>
+    <%= form.text_field :LastName %>
+  </div>
+
+  <div>
+    <%= form.label :email %><br>
+    <%= form.email_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :password %><br>
+    <%= form.password_field :password, placeholder: "Leave blank if unchanged" %>
+  </div>
+
+  <div>
+    <%= form.label :address %><br>
+    <%= form.text_area :address %>
+  </div>
+
+  <div>
+    <%= form.label :city %><br>
+    <%= form.text_field :city %>
+  </div>
+
+  <div>
+    <%= form.label :state %><br>
+    <%= form.text_field :state %>
+  </div>
+
+  <div>
+    <%= form.label :country %><br>
+    <%= form.text_field :country %>
+  </div>
+
+  <div>
+    <%= form.label :pincode %><br>
+    <%= form.number_field :pincode %>
+  </div>
+
+  <div>
+    <%= form.label :Confirm %>
+    <%= form.check_box :status %>
+  </div>
+  <br>
+
+  
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

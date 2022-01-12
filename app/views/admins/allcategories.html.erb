@@ -1,0 +1,14 @@
+<h1>All Categories</h1>
+<h3><%= link_to "Back", admins_path%></h3>
+<div>
+	<table style="border-style: dotted;"><tr><th>Category Name</th><th>Shop's Name</th><th>Shopkeeper Name</th></tr>
+  <% @categories.each do |category| %>
+	  <tr><td><%=category.name%></td>
+	  <% shop = Shop.find(category.shop_id) %>
+	    <td><%=shop.name%></td>
+	    <% user = User.find(shop.user_id) %>
+	   <th> <%= user.FirstName %> <% user.LastName %></th>
+	 </tr>
+<%end%>
+</table>
+</div>

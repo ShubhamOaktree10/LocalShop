@@ -1,0 +1,134 @@
+<h1>
+  <%= link_to "Back", reusers_path %>
+</h1>
+<h2 id="h2h"><%= link_to "Show Carts", carts_path %></h2>
+<h2 id="h2h"><%= link_to "Show Favorite", favorites_path %></h2>
+<h2 id="h2h"><%= link_to "Buy History", buys_path %></h2>
+<div id="alldata"> <h1><%= @product.name %> </h1>
+    <h3>Detail : <%= @product.detail %></h3>
+    <h3>Price : <%= @product.price %></h3>
+    <% if @product.avatar.attached? %>
+      <h3><img src="<%=(url_for(@product.avatar))%>" style="width:250px;height:250px;"></h3>
+    <% end %>
+    <% count = 0 %>
+
+    <% @carts.each do |cart| %>
+      <% if @product.id == cart.product_id %>
+        <h3>Already Added To Cart</h3>
+        <% count +=1 %>
+        <% break %>
+      <% end %>
+    <% end %>
+    <% if count == 0 %>
+      <% cart = Cart.new %>
+      <%=form_with model: cart, remote: true, class: 'add_cart', id: 'add_cart' do |form| %>
+        <div>
+          <%= form.hidden_field :product_id, value:@product.id %>
+        </div>
+        <div>
+          <%= form.hidden_field :user_id, value:current_user.id %>
+        </div>
+        <div>
+          <%= form.submit data: { confirm: "Cart Now"} %>
+        </div>
+      <% end %>
+    <% end %>
+    <br>
+    <% buy = Buy.new %>
+      <%=form_with model: buy do |form| %>
+      <div>
+        <%= form.hidden_field :product_id, value:@product.id %>
+      </div>
+      
+      <div>
+        <%= form.hidden_field :user_id, value:current_user.id %>
+      </div>
+      
+      <div>
+        <%= form.hidden_field :amount, value:@product.price %>
+      </div>
+
+      <div>
+        <%= form.number_field :quant, value:1, in:1..5, step:1 %>
+      </div>
+      
+      <div>
+        <%= form.submit data: { confirm: "Buy Now"} %>
+      </div>
+      <% end %>
+      <br><br>
+
+    <% count1 = 0 %>
+    <% @ratings.each do |rating| %>
+      <% if @product.id == rating.product_id %>
+        <h3><% @rating = Rating.find(rating.id) %></h3>
+        <% count1 +=1 %>
+        <% break %>
+      <% end %>
+    <% end %>
+    <% if count1 == 0 %>
+      <% @rating = Rating.new %>
+    <% end %>
+
+    <%=form_with model: @rating do |form| %>
+      <div>
+        <%= form.hidden_field :product_id, value:@product.id %>
+      </div>
+      <div>
+        <%= form.hidden_field :user_id, value:current_user.id %>
+      </div>
+      <div>
+        <%= form.label :Rating %>
+        <%= form.number_field :point, min:1, max:5, step:1 %>
+      </div>
+      <div>
+        <%= form.label :Description %>
+        <%= form.text_area :Description %>
+      </div>
+      <div>
+        <%= form.submit data: { confirm: "Confirm Rating Now"} %>
+      </div>
+    <% end %>
+    <br>
+    <% if totalratings = Rating.where("product_id = ?", @product.id) %>
+      <% Float all = 0.0 %>
+      <%  c = 0 %>
+      <% totalratings.each do |allrt| %>
+        <% all= all+allrt.point %>
+        <% c += 1 %>
+      <% end %>
+        <% Float alt = all/c %>
+        <% if alt > 0 %>
+          Average Rating is <%= alt %> Given By <%= c %> Users 
+        <% end %>
+    <% end %>
+</div>
+<div id="allrts">
+  <% totalratings.each do |rts| %>
+  <% user = User.find(rts.user_id) %>
+    Name : <%= user.FirstName %> <%= user.LastName %><br>
+    Rating <%= rts.point %><br>
+    <% if rts.Description != nil %>
+      Description : <%= rts.Description %><br>
+    <% end %>
+  <% end %>
+</div>
+
+<style type="text/css">
+  #h2h{
+    float: right;
+    padding-right: 10px;
+  }
+
+  #allrts{
+  float: right;
+  padding-top: 100px;
+  font-size: x-large;
+  width: 50%;
+  }
+
+  #alldata{
+    float: left;
+    width: 50%;
+  }
+</style>

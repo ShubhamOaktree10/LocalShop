@@ -1,0 +1,70 @@
+<h2>Added Products in Carts</h2>
+<h2 id="h2h"><%= link_to "Show Favorite", favorites_path %></h2>
+<h2 id="h2h"><%= link_to "Buy History", buys_path %></h2>
+<h3>
+  <% if @current_role = Role.find_by_user_id(current_user) %>
+    <% if (@current_role.name == "admin") %>
+        <%= link_to "Home", admins_path %>
+    
+    <% elsif (@current_role.name == "seller") %>
+        <%= link_to "Home", sellers_path %>
+    
+    <% else %>
+        <%= link_to "Home", buyers_path %> 
+    <% end %>
+  <%end%>
+</h3>
+<% pp = 0 %>
+
+<div id="cartproduct">
+  <table>
+    <% @carts.each do |cart| %>
+      <% if product = Product.find(cart.product_id) %>
+        <tr><th><%=product.name%></th>
+        <td><%=product.detail%></td>
+        <th><%=product.price%></th>
+        <% pp += product.price %>
+        <% if product.avatar.attached? %>
+          <td><img src="<%=(url_for(product.avatar))%>" style="width:250px;height:250px;"></td>
+        <%end%>
+        <th><%= button_to "remove", {:controller => :carts, :action => 'destroy', :id => cart.id }, :method => :delete, data: { confirm: "Remove from Cart"}, remote:true, class:"delete_cart" %></th>
+        </tr>
+      <%end%>
+    <%end%>
+  </table>
+</div>
+
+<div id="amount">
+  All Product Price : <%= pp %>
+</div>
+
+<style type="text/css">
+
+  #cartproduct{
+    float: left;
+  }
+
+  #amount{
+   float: right;
+   font-size: x-large;
+   padding-top: 30px;
+  }
+  
+  #sellerwork{
+    list-style-type: none;
+    font-size: x-large;
+    padding-top: 30px;
+  }
+
+  #a{
+    float: right;
+    padding-left: 20px;
+
+  }
+
+  #h2h{
+    float: right;
+    padding-top: none;
+    padding-right: 15px;
+  }
+</style>

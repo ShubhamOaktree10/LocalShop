@@ -1,0 +1,17 @@
+<h1>All Shops</h1>
+<h3><%= link_to "Back", admins_path%></h3>
+<div>
+	<table style="border-style: dotted;"><tr><th>Name</th><th>City</th><th>State</th><th>Country</th><th>Pin Code</th><th>Shopkeeper Name</th></tr>
+  <% @shops.each do |shop| %>
+	  <tr><td><%= shop.name %></td>
+	  	<td><%= shop.city %></td>
+	  	<td><%= shop.state %></td>
+	    <td><%= shop.country %></td>
+	    <td><%= shop.pincode %></td>
+      <td><% user = User.find(shop.user_id) %>
+          <%= user.FirstName %> <%= user.LastName %>
+      </td>
+	</tr>
+<%end%>
+</table>
+</div>

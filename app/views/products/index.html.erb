@@ -1,0 +1,15 @@
+<h1>Show All Product Index</h1>
+<h3><%= link_to "Back", user_shop_categories_path(current_user,@shop) %></h3>
+<h3><%= link_to "Add New Product",new_user_shop_category_product_path(current_user, @shop, @category)  %></h3>
+<h2><%=@category.name%></h2>
+<table><tr><th>Name</th><td></td><th>Details</th><td></td><th>Price</th><td></td><th>Image</th><td></td>
+  <th>Edit Product</th><td></td><th>Show Quantities</th></tr>
+  <% @products.each do |product|%>
+    <tr><th><%=product.name%></th><th></th>
+  	<td><%=product.detail%></td><td></td><td><%= product.price %></td><th></th>
+    <% if product.avatar.attached? %>
+      <td> <img src="<%=(url_for(product.avatar))%>" style="width:250px;height:250px;"></td><td></td>
+    <%end%>
+    <th><%= link_to "Edit Product", edit_user_shop_category_product_path(current_user,@shop,@category,product.id) %>
+    </th><td></td><th><%= link_to "Show Quantities", user_shop_category_product_quantities_path(current_user, @shop, @category,product.id) %></th></tr>
+<%end%></table>

@@ -1,0 +1,60 @@
+<h1> Favorite Products </h1>
+<h2 id="h2h"><%= link_to "Show Carts", carts_path %></h2>
+<h2 id="h2h"><%= link_to "Buys History", buys_path %></h2>
+<h3>
+  <% if @current_role = Role.find_by_user_id(current_user) %>
+    <% if (@current_role.name == "admin") %>
+        <%= link_to "Home", admins_path %>
+    
+    <% elsif (@current_role.name == "seller") %>
+        <%= link_to "Home", sellers_path %>
+    
+    <% else %>
+        <%= link_to "Home", buyers_path %> 
+    <% end %>
+  <%end%>
+</h3>
+
+<div id="favproduct">
+  <table>
+    <% @favorites.each do |fav| %>
+      <% if product = Product.find(fav.product_id) %>
+        <tr><th><%=product.name%></th>
+        <td><%=product.detail%></td>
+        <th><%=product.price%></th>
+        <% if product.avatar.attached? %>
+          <td><img src="<%=(url_for(product.avatar))%>" style="width:250px;height:250px;"></td>
+        <%end%>
+        <th><%= button_to "remove from Favorite", {:controller => :favorites, :action => 'destroy', :id => fav.id }, :method => :delete, data: { confirm: "Remove from Favorite"}, remote:true, class: 'delete_favorite' %></th>
+        </tr>
+      <%end%>
+    <%end%>
+  </table>
+</div>
+
+
+
+<style type="text/css">
+
+  #favproduct{
+    float: left;
+  }
+
+  
+  #sellerwork{
+    list-style-type: none;
+    font-size: x-large;
+    padding-top: 30px;
+  }
+
+  #a{
+    float: right;
+    padding-left: 20px;
+
+  }
+
+  #h2h{
+    float: right;
+    padding-right: 15px;
+  }
+</style>

@@ -1,0 +1,12 @@
+<%= form_with model: [current_user, @shop, @category]  do |form| %>
+  <br><br>
+  <div>
+    <%= form.label :Name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <br>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

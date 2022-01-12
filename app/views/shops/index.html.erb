@@ -1,0 +1,21 @@
+<h1>Here Your Shops</h1>
+<h3><%= link_to "Back", sellers_path %></h3>
+<h3><%= link_to "Add New Shop",new_user_shop_path(current_user)%></h3>
+<table id="shoptable"><tr><th>Name</th><th>Show Details</th></tr>
+  <% @shops.each do |shop|%>
+    <% if (shop.user_id == current_user.id) %>
+	    <tr>
+		    <td><%=shop.name %></td><td><%= link_to "View ", [current_user, shop] %></td>
+	    </tr>
+    <% end %>
+  <% end %>
+</table>
+
+<style type="text/css">
+  #shoptable{
+    float: left;
+    text-align: center;
+    width: 500px;
+    border: dotted;
+  }
+</style>

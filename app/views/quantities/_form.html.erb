@@ -1,0 +1,11 @@
+<%= form_with model: [current_user, @shop, @category, @product, @quantity]  do |form| %>
+  <br><br>
+  <div>
+    <%= form.label :quantity %><br>
+    <%= form.number_field :total, in: 0.0..1000.0 %>
+  </div>
+  <br>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

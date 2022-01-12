@@ -1,0 +1,13 @@
+<h1>Category Index</h1>
+<h3><%= link_to "Add New Category", new_user_shop_category_path(current_user, @shop)%></h3>
+<h2><%= link_to "Back", user_shop_path(current_user, @shop)%></h2>
+
+<table><tr><th>Name</th><th></th><th>Edit</th><td></td><th>Show Products</th><td></td>
+  <th>Add New Product</th></tr>
+  <% @categories.each do |category|%>
+    <tr><th><%=category.name %></th><th></th>
+      <td><%= link_to "Edit", edit_user_shop_category_path(current_user, @shop, category.id) %></td><th></th>
+      <td><%= link_to "Show Products", user_shop_category_products_path(current_user, @shop, category.id) %></td><th></th>
+      <td><%= link_to "Add New Product",new_user_shop_category_product_path(current_user, @shop, category.id)  %></td></tr>
+<% end %></table>
+

@@ -1,0 +1,30 @@
+<%= form_with model: [current_user, current_user.shops.build] do |form| %>
+  <br><br>
+  <div>
+    <%= form.label :Name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :City %><br>
+    <%= form.text_field :city %>
+  </div>
+
+  <div>
+    <%= form.label :State %><br>
+    <%= form.text_field :state %>
+  </div>
+
+  <div>
+    <%= form.label :Country %><br>
+    <%= form.text_field :country %>
+  </div>
+
+  <div>
+    <%= form.label :Pincode %><br>
+    <%= form.number_field :pincode %>
+  </div><br>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

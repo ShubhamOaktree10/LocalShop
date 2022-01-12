@@ -1,0 +1,20 @@
+<h1>Quantities Index</h1>
+<h2>Seller Name : <%= current_user.FirstName%> <%= current_user.LastName%></h2>
+<h3>Shop Name : <%= @shop.name%></h3>
+<h4>Category Name : <%= @category.name%></h4>
+<h4>Product Name : <%= @product.name%></h4>
+<h4>Product Detail : <%= @product.detail%></h4>
+<% if @product.avatar.attached? %>
+  <img src="<%=(url_for(@product.avatar))%>" style="width:250px;height:250px;">
+<%end%>
+    <% if @quantity == nil%>
+      <h4><%= link_to "Add Quantity", new_user_shop_category_product_quantity_path(current_user, @shop, @category, @product) %></h4>
+    <% elsif @quantity.total == 0 %>
+      <h4 style="background-color: red;">Out Of Stoke</h4>
+      <h4><%= link_to "Edit Quantity", edit_user_shop_category_product_quantity_path(current_user, @shop, @category, @product, @quantity.id) %></h4>
+    <%else%>
+      <h4>Product Quantity : <%= @quantity.total %></h4>
+      <h4><%= link_to "Edit Quantity", edit_user_shop_category_product_quantity_path(current_user, @shop, @category, @product, @quantity.id) %></h4>
+    <%end%>
+  
+<h3><%= link_to "Back", user_shop_category_products_path(current_user,@shop,@category) %></h3>

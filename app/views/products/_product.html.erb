@@ -1,0 +1,33 @@
+<table>
+  <% if @products.any? %>
+    <% @products.each do |product| %>
+      <tr>
+        <th><%= product.name %></th>
+        <th><%= product.detail %></th>
+        <th><%= product.price %></th>
+        <% if product.avatar.attached? %>
+          <th><img src="<%=(url_for(product.avatar))%>" style="width:250px;height:250px;"></th>
+        <%end%>
+        <th>
+          <% if current_user.present? %>
+            <%= link_to "View", showproduct_path(product.id) %>
+          <% end %>
+        </th>
+        <% if totalratings = Rating.where("product_id = ?", product.id) %>
+          <% Float all = 0.0 %>
+          <%  c = 0 %>
+          <% totalratings.each do |allrt| %>
+            <% all= all+allrt.point %>
+          <% c += 1 %>
+          <% end %>
+          <% Float alt = all/c %>
+          <% if alt >0 %>
+            <th>Average Rating is <%= alt %> Given By <%= c %> Users</th>
+          <% end %> 
+        <% end %>
+      </tr>
+    <% end %>
+  <% else %>
+    <th>Nothing to show.</th>
+  <% end %>
+</table>
